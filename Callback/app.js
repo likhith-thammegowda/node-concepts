@@ -4,8 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var fetchFileFromDrive = require('./routes/fetchFileFromDrive');
 var GoogleDriveFunction = require('./routes/GetFileFromDrive');
 
 
@@ -21,8 +19,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/fetch', fetchFileFromDrive);
 app.use('/googleDrive', GoogleDriveFunction);
 
 // catch 404 and forward to error handler
