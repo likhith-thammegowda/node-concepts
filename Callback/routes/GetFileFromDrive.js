@@ -56,8 +56,6 @@ const uploadFile = (fetchFile) => {
 
 // function to send email alert to user
 const sendMails = () => {
-    console.log("yes");
-
     let mailTransporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -82,7 +80,6 @@ const sendMails = () => {
 
     try {
         mailTransporter.sendMail(mailDetails, function (err, data) {
-            console.log("executed")
             if (err) {
                 console.log(err, "executed")
             } else {
@@ -98,7 +95,6 @@ const sendMails = () => {
 
 // // function to convert csv to json
 const convertCsvToJson = (outputFilename) => {
-    console.log(outputFilename)
     const csvFilePath = outputFilename;
     csv()
         .fromFile(csvFilePath)
