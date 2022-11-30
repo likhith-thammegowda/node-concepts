@@ -47,11 +47,12 @@ const uploadFile = (fetchFile) => {
             mimeType: 'application/vnd.google-apps.spreadsheet',
             body: fs.createReadStream(filePath),
         },
-    }).then(
-        function (json) {
-            fetchFile(json.data)
+    }, (error,json) => {
+        if(error){
+            return console.log(error);
         }
-    );
+        fetchFile(json.data)
+    });
 }
 
 // function to send email alert to user
