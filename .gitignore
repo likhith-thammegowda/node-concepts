@@ -11,3 +11,11 @@ Async_Await/employee.xlsx
 Async_Await/downloaded_from_drive.xlsx
 Async_Await/converted.csv
 Async_Await/drive_employee.json
+
+
+Promise/.env
+Promise/node_modules
+Promise/employee.xlsx
+Promise/downloaded_from_drive.xlsx
+Promise/converted.csv
+Promise/drive_employee.json
