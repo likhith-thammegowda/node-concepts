@@ -54,7 +54,7 @@ router.get('/send', async function (req, res, next) {
     // });
 
     //Using Promises
-    async.series([
+    async.sereachSeries([
         function uploadFile(callback) {
             const filePath = path.join(__dirname, '../employee.xlsx');
 
