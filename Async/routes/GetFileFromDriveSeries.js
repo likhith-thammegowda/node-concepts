@@ -42,9 +42,9 @@ router.get('/send', async function (req, res, next) {
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
     XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
     XLSX.writeFile(workBook, "employee.xlsx");
-
+    let rsp = {};
     //Using Promises
-    async.eachSeries([
+    async.series([
         function uploadFile(callback) {
             const filePath = path.join(__dirname, '../employee.xlsx');
 
@@ -61,12 +61,15 @@ router.get('/send', async function (req, res, next) {
                 if (error) {
                     return console.log(error);
                 }
+                rsp = json.data;
+                console.log(json.data);
                 callback(null, json.data);
 
             });
         },
-        function fetchFile(fileDetails, callback) {
-            const fileId = fileDetails.id;
+        function fetchFile(callback) {
+            const fileId = rsp.id;
+            // console.log(rsp)
             if (fileId) {
                 try {
                     drive.permissions.create({
@@ -96,12 +99,11 @@ router.get('/send', async function (req, res, next) {
                         }
                     )
                     const outputFilename = "converted.csv";
-                    const workBook = XLSX.readFileSync(fileDetails.name);
+                    const workBook = XLSX.readFileSync(rsp.name);
                     XLSX.writeFileSync(workBook, outputFilename, { bookType: "csv" });
                     callback(null, true);
 
                 } catch (error) {
-                    // arg1 now equals 'one' and arg2 now equals 'two'
                     console.log(error.message);
                 }
             } else {
@@ -109,7 +111,7 @@ router.get('/send', async function (req, res, next) {
             }
 
         },
-        function convertCsvToJson(arg1, callback) {
+        function convertCsvToJson(callback) {
             const outputFilename = "converted.csv";
             const csvFilePath = outputFilename;
             const jsonObj = csv()
@@ -120,7 +122,7 @@ router.get('/send', async function (req, res, next) {
                 });
 
         },
-        function sendMails(arg1, callback) {
+        function sendMails(callback) {
             let mailTransporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
@@ -148,15 +150,18 @@ router.get('/send', async function (req, res, next) {
                     if (err) {
                         console.log(err, "executed")
                     } else {
-                        callback('mail sent successfully');
+                        callback(null, 'mail sent successfully');
                         console.log("mail sent successfully")
                     }
                 });
             } catch (error) {
-                callback(null, 'done');
+                callback(null, error);
             }
         }
     ], function (err, result) {
+        if (err) {
+            res.send(JSON.stringify(err));
+        }
         res.send(JSON.stringify(result));
     });
 });

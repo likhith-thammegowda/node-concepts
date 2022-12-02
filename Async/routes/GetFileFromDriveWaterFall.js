@@ -50,7 +50,10 @@ router.get('/send', async function (req, res, next) {
         convertCsvToJson,
         sendMails,
     ], function (err, result) {
-        res.send(result);
+        if (err) {
+            res.send(JSON.stringify(err));
+        }
+        res.send(JSON.stringify(result));
     });
     function uploadFile(callback) {
         const filePath = path.join(__dirname, '../employee.xlsx');
@@ -108,8 +111,7 @@ router.get('/send', async function (req, res, next) {
                 callback(null, true);
 
             } catch (error) {
-                // arg1 now equals 'one' and arg2 now equals 'two'
-                console.log(error.message);
+                callback(error, 'Something went wrong');
             }
         } else {
             return false;
@@ -155,12 +157,12 @@ router.get('/send', async function (req, res, next) {
                 if (err) {
                     console.log(err, "executed")
                 } else {
-                    callback(null, 'done');
+                    callback(null, 'mail sent successfully');
                     console.log("mail sent successfully")
                 }
             });
         } catch (error) {
-            callback(null, 'done');
+            callback(error, 'Something went wrong');
 
         }
     }
