@@ -43,18 +43,8 @@ router.get('/send', async function (req, res, next) {
     XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
     XLSX.writeFile(workBook, "employee.xlsx");
 
-    // async waterfall
-    // async.waterfall([
-    //     uploadFile,
-    //     fetchFile,
-    //     convertCsvToJson,
-    //     sendMails,
-    // ], function (err, result) {
-    //     res.send(result);
-    // });
-
     //Using Promises
-    async.sereachSeries([
+    async.eachSeries([
         function uploadFile(callback) {
             const filePath = path.join(__dirname, '../employee.xlsx');
 
@@ -158,28 +148,17 @@ router.get('/send', async function (req, res, next) {
                     if (err) {
                         console.log(err, "executed")
                     } else {
-                        callback(null, 'done');
+                        callback('mail sent successfully');
                         console.log("mail sent successfully")
                     }
                 });
             } catch (error) {
                 callback(null, 'done');
-
             }
         }
-    ]).then(results => {
-        console.log(results);
-        // results is equal to ['one','two']
-    }).catch(err => {
-        console.log(err);
+    ], function (err, result) {
+        res.send(JSON.stringify(result));
     });
-
-
-
-
-
-
-
 });
 
 module.exports = router;

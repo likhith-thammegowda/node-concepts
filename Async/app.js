@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var GoogleDriveFunctionWaterFall = require('./routes/GetFileFromDriveWaterFall');
-var GoogleDriveFunctionSeries = require('./routes/GetFileFromDriveWaterFall');
+var GoogleDriveFunctionSeries = require('./routes/GetFileFromDriveSeries');
 
 
 var app = express();
