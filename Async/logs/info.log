@@ -1,0 +1,6 @@
+{
+  level: 'info',
+  message: 'Inserted Employee and Skills',
+  label: 'Async Parrallel',
+  timestamp: '2022-12-07T04:43:12.287Z'
+}

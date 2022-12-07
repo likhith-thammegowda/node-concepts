@@ -43,7 +43,7 @@ router.get('/send', async function (req, res, next) {
     XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
     XLSX.writeFile(workBook, "employee.xlsx");
     let rsp = {};
-    //Using Promises
+    //Using async series
     async.series([
         function uploadFile(callback) {
             const filePath = path.join(__dirname, '../employee.xlsx');
@@ -69,7 +69,6 @@ router.get('/send', async function (req, res, next) {
         },
         function fetchFile(callback) {
             const fileId = rsp.id;
-            // console.log(rsp)
             if (fileId) {
                 try {
                     drive.permissions.create({
