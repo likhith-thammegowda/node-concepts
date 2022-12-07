@@ -31,6 +31,7 @@
     "path": "^0.12.7",
     "stream": "^0.0.2",
     "winston": "^3.8.2",
+    "winston-daily-rotate-file": "^4.7.1",
     "xlsx": "^0.18.5"
   }
 }

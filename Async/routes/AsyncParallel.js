@@ -39,7 +39,7 @@ router.get('/', async function (req, res, next) {
             function (callback) {
                 // console.log(companies)
                 skills.forEach(function (skill) {
-                    var myobj = { name: skill.id, description: skill.description, created_date: skill.created_date };
+                    var myobj = { name: skill.name, description: skill.description, created_date: skill.created_date };
                     dbo.collection("skills").insertOne(myobj, function (err, res) {
                         if (err) throw err;
                     });
@@ -62,8 +62,8 @@ router.get('/', async function (req, res, next) {
                 level: 'info',
                 message: 'Inserted Employee and Skills'
               });
-            // logger.info("Inserted Skills");
-            // loggers.info("Inserted Employee and Skills");
+            logger.info("Inserted Skills");
+            loggers.info("Inserted Employee and Skills");
         }).catch(err => {
             res.send(err);
             loggers.info("An error occured!");

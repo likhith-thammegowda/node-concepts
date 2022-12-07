@@ -1,6 +1,24 @@
 {
   level: 'info',
   message: 'Inserted Employee and Skills',
-  label: 'Async Parrallel',
-  timestamp: '2022-12-07T04:43:12.287Z'
+  label: 'Async Parallel',
+  timestamp: '2022-12-07T05:12:08.778Z'
+}
+{
+  message: 'Inserted Skills',
+  level: 'info',
+  label: 'Async Parallel',
+  timestamp: '2022-12-07T05:12:08.782Z'
+}
+{
+  level: 'info',
+  message: 'Inserted Employee and Skills',
+  label: 'Async Parallel',
+  timestamp: '2022-12-07T05:13:00.477Z'
+}
+{
+  message: 'Inserted Skills',
+  level: 'info',
+  label: 'Async Parallel',
+  timestamp: '2022-12-07T05:13:00.480Z'
 }

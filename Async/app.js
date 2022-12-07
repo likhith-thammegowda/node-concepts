@@ -8,13 +8,15 @@ const keys = require('./config/keys');
 var GoogleDriveFunctionWaterFall = require('./routes/GetFileFromDriveWaterFall');
 var GoogleDriveFunctionSeries = require('./routes/GetFileFromDriveSeries');
 var AsyncParallel = require('./routes/AsyncParallel');
-
+const winstonLogger = require('./logger/winston');
 // connect to mongodb
 mongoose.Promise = global.Promise;
 var db=mongoose.connect(keys.mongodb.dbURI, { useNewUrlParser: true, useUnifiedTopology: true  }, (error,client) => {
   if(error) {
+    winstonLogger.error(error);
     return console.log(error);
   }
+  winstonLogger.info("connected to mongodb");
   console.log('connected to mongodb');
 });
 mongoose.pluralize(null);
@@ -36,6 +38,7 @@ app.use('/add', AsyncParallel);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  winstonLogger.error(`400 || ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
   next(createError(404));
 });
 
@@ -44,7 +47,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+  winstonLogger.error(`${err.status || 500} - ${res.statusMessage} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
   // render the error page
   res.status(err.status || 500);
   res.render('error');
